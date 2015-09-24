@@ -1,9 +1,9 @@
 <!doctype html>
-<html class="no-js" lang="es-ES">
+<html class="no-js" lang="es-ES" ng-app="app">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge,chrome=1">
-        <title>Curso de AngularJS</title>
+        <title>Curso de AngularJS - Seguro Médico</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
         <!-- Coloca favicon.ico y apple-touch-icon(s) en el directorio raiz -->
@@ -19,17 +19,52 @@
         <!-- endbuild -->
 
     </head>
-    <body ng-app="leafletAJS">
+    <body ng-controller="SeguroController">
         <!--[if lt IE 8]>
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
 
+        <div class="container">
 
+            <div class="row">
+                <div class="col-md-12">
+                    <h1>Curso AngularJS</h1>
 
+                    <form>
 
-        <h1>Inicio proyecto</h1>
+                        <fieldset>
+                            <legend>Seguro Médico</legend>
 
+                            <label for="nif">NIF:</label><input id="nif" name="nif" type="text" ng-model="seguro.nif" /><br>
+                            <label for="nombre">Nombre:</label><input id="nombre" name="nombre" type="text" ng-model="seguro.nombre" /><br>
+                            <label for="ape1">1º Apellido:</label><input id="ape1" name="ape1" type="text" ng-model="seguro.ape1" /><br>
+                            <label for="edad">Edad:</label><input id="edad" name="edad" type="text" ng-model="seguro.edad" /><br>
+                            <label for="sexo">Sexo:</label><select id="sexo" name="sexo" type="checkbox" ng-model="seguro.sexo" ><option value="">--Elige opcion--</option><option value="H">Hombre</option><option value="M">Mujer</option></select><br>
+                            <label for="casado">Casado:</label><input id="casado" name="casado" type="checkbox" ng-model="seguro.casado" /><br>
+                            <label for="numHijos">Nº Hijos:</label><input id="numHijos" name="numHijos" type="text" ng-model="seguro.numHijos" /><br>
+                            <label for="embarazada">Embarazada:</label><input id="embarazada" name="embarazada" type="checkbox" ng-model="seguro.embarazada" /><br>
+                            <label for="fechaCreacion">Fecha de creación:</label><input id="fechaCreacion" name="fechaCreacion" type="text" ng-model="seguro.fechaCreacion" /><br>
+                        </fieldset>
+                        <fieldset>
+                            <legend>Coberturas</legend>
+                            <label for="oftalmologia">Oftalmologia:</label><input id="oftalmologia" name="oftalmologia" type="checkbox" ng-model="seguro.coberturas.oftalmologia" /><br>
+                            <label for="dental">Dental:</label><input id="dental" name="dental" type="checkbox" ng-model="seguro.coberturas.dental" /><br>
+                            <label for="fecundacionInVitro">Fecundacion In Vitro:</label><input id="fecundacionInVitro" name="fecundacionInVitro" type="checkbox" ng-model="seguro.coberturas.fecundacionInVitro" /><br>
+                        </fieldset>
+                        <fieldset>
+                            <legend>Enfermedades</legend>
+                            <label for="corazon">Corazon:</label><input id="corazon" name="corazon" type="checkbox" ng-model="seguro.enfermedades.corazon" /><br>
+                            <label for="estomacal">Estomacal:</label><input id="estomacal" name="estomacal" type="checkbox" ng-model="seguro.enfermedades.estomacal" /><br>
+                            <label for="rinyones">Riñones:</label><input id="rinyones" name="rinyones" type="checkbox" ng-model="seguro.enfermedades.rinyones" /><br>
+                            <label for="alergia">Alergia:</label><input id="alergia" name="alergia" type="checkbox" ng-model="seguro.enfermedades.alergia" /><br>
+                            <label for="nombreAlergia">Nombre de la alergia:</label><input ng-disabled="seguro.enfermedades.alergia===false" id="nombreAlergia" name="nombreAlergia" type="text" ng-model="seguro.enfermedades.nombreAlergia" /><br>
+                        </fieldset>
 
+                    </form>
+                </div>
+            </div>
+
+        </div>
 
 
         <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
@@ -53,12 +88,6 @@
         <!-- inject:js -->
 
         <script src="/scripts/templates.js"></script>
-
-        <script src="/scripts/services.js"></script>
-
-        <script src="/scripts/helpers.js"></script>
-
-        <script src="/scripts/controllers.js"></script>
 
         <script src="/scripts/app.js"></script>
 
