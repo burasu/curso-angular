@@ -42,7 +42,7 @@
                             <label for="sexo">Sexo:</label><select id="sexo" name="sexo" type="checkbox" ng-model="seguro.sexo" ><option value="">--Elige opcion--</option><option value="H">Hombre</option><option value="M">Mujer</option></select><br>
                             <label for="casado">Casado:</label><input id="casado" name="casado" type="checkbox" ng-model="seguro.casado" /><br>
                             <label for="numHijos">Nº Hijos:</label><input id="numHijos" name="numHijos" type="text" ng-model="seguro.numHijos" /><br>
-                            <label for="embarazada">Embarazada:</label><input id="embarazada" name="embarazada" type="checkbox" ng-model="seguro.embarazada" /><br>
+                            <label for="embarazada" ng-show="seguro.sexo==='M'">Embarazada:</label><input id="embarazada" name="embarazada" type="checkbox" ng-model="seguro.embarazada" ng-show="seguro.sexo==='M'" /><br>
                             <label for="fechaCreacion">Fecha de creación:</label><input id="fechaCreacion" name="fechaCreacion" type="text" ng-model="seguro.fechaCreacion" /><br>
                         </fieldset>
                         <fieldset>

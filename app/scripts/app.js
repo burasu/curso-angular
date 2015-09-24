@@ -2,7 +2,7 @@
 
 var app = angular.module('app', []);
 
-function SeguroController($scope)
+app.controller('SeguroController', function($scope, $log)
 {
     $scope.seguro = {
         nif: '',
@@ -26,9 +26,7 @@ function SeguroController($scope)
             nombreAlergia: ''
         },
         fechaCreacion: new Date()
-    }
-};
+    };
 
-angular
-    .module('app')
-    .controller('SeguroController', SeguroController);
+    $log.debug("Acabamos de crear el $scope");
+});
