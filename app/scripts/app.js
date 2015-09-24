@@ -2,11 +2,50 @@
 
 var app = angular.module('app', []);
 
-// Establecemos una variable por defecto para el idioma, por si queremos implementar
-// cambios de idiomas.
-app.constant('language', 'es-ES');
+function RemoteResource($http, baseUrl)
+{
+    this.get = function(fnOK, fnError)
+    {
+        $http({
+            method: 'GET',
+            url: baseUrl + '/datos.json'
+        })
+        .success(function(data, status, headers, config)
+        {
+            fnOK(data);
+        })
+        .error(function(data, status, headers, config)
+        {
+            fnError(data, status);
+        });
+    }
+}
 
-app.controller('SeguroController', ['$scope', '$log', '$http', 'language', function($scope, $log, $http, language)
+// Definimos un provider
+function RemoteResourceProvider()
+{
+    var _baseUrl;
+    this.setBaseUrl = function(baseUrl)
+    {
+        _baseUrl = baseUrl;
+    }
+
+    this.$get = ['$http', function($http)
+    {
+        return new RemoteResource($http, _baseUrl);
+    }];
+}
+
+app.provider('remoteResource', RemoteResourceProvider);
+
+// URL de la que obtendremos los datos futuros de servicios REST, etc...
+app.constant('baseUrl', '.');
+app.config(['baseUrl', 'remoteResourceProvider', function(baseUrl, remoteResourceProvider)
+{
+    remoteResourceProvider.setBaseUrl(baseUrl);
+}]);
+
+app.controller('SeguroController', ['$scope', '$log', 'remoteResource', function($scope, $log, remoteResource)
 {
     $scope.seguro={
         nif: '',
@@ -33,19 +72,13 @@ app.controller('SeguroController', ['$scope', '$log', '$http', 'language', funct
     };
 
     $log.debug('Acabamos de crear el $scope');
-    $log.debug(language);
 
-    $http({
-        method: 'GET',
-        url: 'datos.json'
-    })
-    .success(function(data, status, headers, config)
+    remoteResource.get(function(seguro)
     {
-        $scope.seguro = data;
-    })
-    .error(function(data, status, headers, config)
+        $scope.seguro = seguro;
+    }, function(data, status)
     {
-        alert('Ha fallado la petición. Estado HTTP: ' + status);
+        alert('Ha fallado la peticion. Estado HTTP: ' + status);
     });
 
 }]);
