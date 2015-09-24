@@ -28,7 +28,8 @@
 
             <div class="row">
                 <div class="col-md-12">
-                    <h1>Curso AngularJS</h1>
+
+                    <ng-include src="'cabecera.html'"></ng-include>
 
                     <form>
 
@@ -39,7 +40,8 @@
                             <label for="nombre">Nombre:</label><input id="nombre" name="nombre" type="text" ng-model="seguro.nombre" /><br>
                             <label for="ape1">1º Apellido:</label><input id="ape1" name="ape1" type="text" ng-model="seguro.ape1" /><br>
                             <label for="edad">Edad:</label><input id="edad" name="edad" type="text" ng-model="seguro.edad" /><br>
-                            <label for="sexo">Sexo:</label><select id="sexo" name="sexo" type="checkbox" ng-model="seguro.sexo" ><option value="">--Elige opcion--</option><option value="H">Hombre</option><option value="M">Mujer</option></select><br>
+                            <label for="sexo">Sexo:</label>
+                            <select id="sexo" name="sexo" type="checkbox" ng-model="seguro.sexo" ng-options="sexo.codSexo as sexo.descripcion for sexo in sexos" ><option value="">--Elige opcion--</option></select><br>
                             <label for="casado">Casado:</label><input id="casado" name="casado" type="checkbox" ng-model="seguro.casado" /><br>
                             <label for="numHijos">Nº Hijos:</label><input id="numHijos" name="numHijos" type="text" ng-model="seguro.numHijos" /><br>
                             <label for="embarazada" ng-show="seguro.sexo==='M'">Embarazada:</label><input id="embarazada" name="embarazada" type="checkbox" ng-model="seguro.embarazada" ng-show="seguro.sexo==='M'" /><br>
@@ -61,6 +63,8 @@
                         </fieldset>
 
                     </form>
+
+                    <ng-include src="'pie.html'"></ng-include>
                 </div>
             </div>
 
@@ -81,6 +85,7 @@
         <!-- bower:js -->
         <script src="lib/jquery/dist/jquery.js"></script>
         <script src="lib/angular/angular.js"></script>
+        <script src="lib/angular-sanitize/angular-sanitize.js"></script>
         <script src="lib/bootstrap/dist/js/bootstrap.js"></script>
         <!-- endbower -->
         <!-- endbuild -->

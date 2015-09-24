@@ -1,6 +1,6 @@
 'use strict';
 
-var app = angular.module('app', []);
+var app = angular.module('app', ['ngSanitize']);
 
 function RemoteResource($http, baseUrl)
 {
@@ -47,6 +47,21 @@ app.config(['baseUrl', 'remoteResourceProvider', function(baseUrl, remoteResourc
 
 app.controller('SeguroController', ['$scope', '$log', 'remoteResource', function($scope, $log, remoteResource)
 {
+    $scope.mensaje = 'Hola <strong>Mundo</strong>';
+
+    $scope.urlLogo="http://www.cursoangularjs.es/lib/exe/fetch.php?cache=&media=unidades:04_masdirectivas:medical14.png";
+
+    $scope.sexos = [
+        {
+            codSexo: 'H',
+            descripcion: 'Hombre'
+        },
+        {
+            codSexo: 'M',
+            descripcion: 'Mujer'
+        }
+    ];
+
     $scope.seguro={
         nif: '',
         nombre: '',
