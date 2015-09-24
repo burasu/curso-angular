@@ -129,6 +129,8 @@ gulp.task('copy', function() {
         .pipe(gulp.dest('./dist'));
     gulp.src('./app/lib/font-awesome/fonts/**')
         .pipe(gulp.dest('./dist/fonts'));
+    gulp.src('./app/*.json')
+        .pipe(gulp.dest('./dist'));
 });
 
 // Vigila cambios que se produzcan en el código
