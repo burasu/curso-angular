@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge,chrome=1">
-        <title>Ejemplos de uso de las directivas de Angular Leaflet</title>
+        <title>Curso de AngularJS</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
         <!-- Coloca favicon.ico y apple-touch-icon(s) en el directorio raiz -->
@@ -11,10 +11,6 @@
         <!-- build:css css/style.min.css -->
         <!-- bower:css -->
         <link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.css" />
-        <link rel="stylesheet" href="lib/leaflet/dist/leaflet.css" />
-        <link rel="stylesheet" href="lib/Leaflet.label/dist/leaflet.label.css" />
-        <link rel="stylesheet" href="lib/prism/themes/prism.css" />
-        <link rel="stylesheet" href="lib/semantic/dist/semantic.css" />
         <!-- endbower -->
         <!-- inject:css -->
         <link rel="stylesheet" href="/stylesheets/main.css">
@@ -31,29 +27,7 @@
 
 
 
-        <div class="ui divided equal height padded grid leftside">
-            <div class="seven wide middle column">
-
-                <h2 class="ui header"><a href="#/">Ejemplos de Angular-leaflet-directive</a></h2>
-
-                <p>Ejemplos basados y copiados del repositorio de Angular-leaflet-directive en <a href="http://github.com/tombatossals/angular-leaflet-directive">Github.</a></p>
-
-                <div class="ui tabular filter menu">
-                    <a class="item" ng-repeat="s in sections" ng-class="{ active: s.active }" ng-click="setActiveSection(s.id)" ng-bind="s.name"></a>
-                </div>
-                <div class="ui selection list">
-                    <a class="item" ng-class="{ active: example.id === e.id }" ng-href="#{{ e.id }}" ng-repeat="e in getExamplesFromActiveSection()">
-                        <i class="map marker icon"></i>
-                        <div class="content">
-                            <div ng-bind="($index +1) + '. ' + e.title"></div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <div class="nine wide right column rightside">
-                <ng-view></ng-view>
-            </div>
-        </div>
+        <h1>Inicio proyecto</h1>
 
 
 
@@ -73,10 +47,6 @@
         <script src="lib/jquery/dist/jquery.js"></script>
         <script src="lib/angular/angular.js"></script>
         <script src="lib/bootstrap/dist/js/bootstrap.js"></script>
-        <script src="lib/leaflet/dist/leaflet-src.js"></script>
-        <script src="lib/Leaflet.label/dist/leaflet.label.js"></script>
-        <script src="lib/prism/prism.js"></script>
-        <script src="lib/semantic/dist/semantic.js"></script>
         <!-- endbower -->
         <!-- endbuild -->
         <!-- build:js js/app.min.js -->
