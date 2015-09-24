@@ -2,7 +2,11 @@
 
 var app = angular.module('app', []);
 
-app.controller('SeguroController', ['$scope', '$log', '$http', function($scope, $log, $http)
+// Establecemos una variable por defecto para el idioma, por si queremos implementar
+// cambios de idiomas.
+app.constant('language', 'es-ES');
+
+app.controller('SeguroController', ['$scope', '$log', '$http', 'language', function($scope, $log, $http, language)
 {
     $scope.seguro={
         nif: '',
@@ -29,6 +33,7 @@ app.controller('SeguroController', ['$scope', '$log', '$http', function($scope, 
     };
 
     $log.debug('Acabamos de crear el $scope');
+    $log.debug(language);
 
     $http({
         method: 'GET',
