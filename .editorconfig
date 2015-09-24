@@ -1,0 +1,23 @@
+# Inicializamos el fichero para unificar los editores
+# de los diferentes desarrolladores.
+
+# top-most Editorconfig file.
+root = true
+
+# Configuración para todos los archivos.
+[*]
+indent_style = space
+indent_size = 4
+end_of_line = lf
+charset = utf-8
+trim_trailing_whitespace = true
+insert_final_newline = true
+
+# Configuracion para ficheros stylus
+[*.styl]
+indent_size = 2
+
+# Configuración para los archivos Markdown
+[*.md]
+trim_trailing_whitespace = false
+indent_style = tab
