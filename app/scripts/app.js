@@ -2,38 +2,48 @@
 
 var app = angular.module('app', ['ngSanitize']);
 
-function RemoteResource($http, baseUrl)
+function RemoteResource($http, $q, baseUrl)
 {
-    this.get = function(fnOK, fnError)
+    this.get = function()
     {
+        var defered = $q.defer();
+        var promise = defered.promise;
+
         $http({
             method: 'GET',
             url: baseUrl + '/datos.json'
         })
         .success(function(data, status, headers, config)
         {
-            fnOK(data);
+            defered.resolve(data);
         })
         .error(function(data, status, headers, config)
         {
-            fnError(data, status);
+            defered.reject(status);
         });
+
+        return promise;
     };
 
-    this.list = function(fnOK, fnError)
+    this.list = function()
     {
+        var defered = $q.defer();
+        var promise = defered.promise;
+
         $http({
             method: 'GET',
             url: baseUrl + '/listado_seguros.json'
         })
         .success(function(data, status, headers, config)
         {
-            fnOK(data);
+            defered.resolve(data);
         })
         .error(function(data, status, headers, config)
         {
-            fnError(data, status);
+            defered.reject(status);
         });
+
+        return promise;
     };
 }
 
@@ -44,11 +54,11 @@ function RemoteResourceProvider()
     this.setBaseUrl = function(baseUrl)
     {
         _baseUrl = baseUrl;
-    }
+    };
 
-    this.$get = ['$http', function($http)
+    this.$get = ['$http', '$q', function($http, $q)
     {
-        return new RemoteResource($http, _baseUrl);
+        return new RemoteResource($http, $q, _baseUrl);
     }];
 }
 
@@ -157,10 +167,10 @@ app.controller('SeguroController', ['$scope', '$log', 'remoteResource', function
 
     $log.debug('Acabamos de crear el $scope');
 
-    remoteResource.get(function(seguro)
+    remoteResource.get().then(function(seguro)
     {
         $scope.seguro = seguro;
-    }, function(data, status)
+    }, function(status)
     {
         alert('Ha fallado la peticion. Estado HTTP: ' + status);
     });
@@ -175,10 +185,10 @@ app.controller('ListadoSeguroController', ['$scope', 'remoteResource', function(
         apel: ''
     }
 
-    remoteResource.list(function(seguros)
+    remoteResource.list().then(function(seguros)
     {
         $scope.seguros = seguros;
-    }, function(data, status)
+    }, function(status)
     {
         alert('Ha fallado la petición. Estado HTTP: ' + status);
     });
