@@ -19,7 +19,7 @@
         <!-- endbuild -->
 
     </head>
-    <body ng-controller="MainController">
+    <body ng-controller="ListadoSeguroController">
         <!--[if lt IE 8]>
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
@@ -31,14 +31,39 @@
 
                     <ng-include src="'cabecera.html'"></ng-include>
 
-                    <ul>
-                        <li>
-                            <a href="listado.html">Listado de seguros medicos</a>
-                        </li>
-                        <li>
-                            <a href="detalle.html">Detalle de seguros medicos</a>
-                        </li>
-                    </ul>
+                    <p>
+                        Filtrar por apellido: <input ng-model="filtro.apel" />
+                    </p>
+
+                    <table class="table table-striped table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th>NIF</th>
+                                <th>Nombre</th>
+                                <th>Apellido</th>
+                                <th>Sexo</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="seguro in seguros | filteri18n:{apel:filtro.apel}" ng-style="{color:($odd?'red':'green')}">
+                                <td><a ng-href="./seguros/edit/{{seguro.nif}}">{{seguro.nif}}</a></td>
+                                <td>{{seguro.nombre}}</td>
+                                <td>{{seguro.apel}}</td>
+                                <td ng-switch on="seguro.sexo">
+                                    <span ng-switch-when="H">Hombre</span>
+                                    <span ng-switch-when="M">Mujer</span>
+                                    <span ng-switch-when=""></span>
+                                    <span ng-switch-default>Desconocido</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="3">El Nº de seguros médicos es:</td>
+                                <td ng-bind="seguros.length"></td>
+                            </tr>
+                        </tfoot>
+                    </table>
 
                     <ng-include src="'pie.html'"></ng-include>
                 </div>
@@ -78,3 +103,8 @@
         <!-- endbuild -->
     </body>
 </html>
+
+
+
+
+

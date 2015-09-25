@@ -18,7 +18,23 @@ function RemoteResource($http, baseUrl)
         {
             fnError(data, status);
         });
-    }
+    };
+
+    this.list = function(fnOK, fnError)
+    {
+        $http({
+            method: 'GET',
+            url: baseUrl + '/listado_seguros.json'
+        })
+        .success(function(data, status, headers, config)
+        {
+            fnOK(data);
+        })
+        .error(function(data, status, headers, config)
+        {
+            fnError(data, status);
+        });
+    };
 }
 
 // Definimos un provider
@@ -45,6 +61,59 @@ app.config(['baseUrl', 'remoteResourceProvider', function(baseUrl, remoteResourc
     remoteResourceProvider.setBaseUrl(baseUrl);
 }]);
 
+app.value('urlLogo', 'http://www.cursoangularjs.es/lib/exe/fetch.php?cache=&media=unidades:04_masdirectivas:medical14.png');
+app.run(['$rootScope', 'urlLogo', function($rootScope, urlLogo)
+{
+    $rootScope.urlLogo = urlLogo;
+}]);
+
+app.filter('filteri18n', ['$filter', function($filter)
+{
+    var filterFn = $filter('filter');
+
+    /** Transforma el texto quitando todos los acentos diéresis, etc. **/
+    function normalize(texto)
+    {
+        texto = texto.replace(/[áàäâ]/g, "a");
+        texto = texto.replace(/[éèëê]/g, "e");
+        texto = texto.replace(/[íìïî]/g, "i");
+        texto = texto.replace(/[óòôö]/g, "o");
+        texto = texto.replace(/[úùüü]/g, "u");
+        texto = texto.toUpperCase()
+
+        return texto;
+    }
+
+    /** Esta función es el comparator en el filter **/
+    function comparator(actual, expected)
+    {
+        if (normalize(actual).indexOf(normalize(expected)) >= 0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    /** Este es realmente el filtro **/
+    function filteri18n(array, expression)
+    {
+        // Lo único que hace es llamar al filter original pero pasado
+        // la nueva función de comparator
+        return filterFn(array, expression, comparator);
+    }
+
+    return filteri18n;
+
+}]);
+
+app.controller('MainController', ['$scope', function($scope)
+{
+
+}]);
+
 app.controller('SeguroController', ['$scope', '$log', 'remoteResource', function($scope, $log, remoteResource)
 {
     $scope.mensaje = 'Hola <strong>Mundo</strong>';
@@ -65,7 +134,7 @@ app.controller('SeguroController', ['$scope', '$log', 'remoteResource', function
     $scope.seguro={
         nif: '',
         nombre: '',
-        ape1: '',
+        apel: '',
         edad: undefined,
         sexo: '',
         casado: false,
@@ -96,4 +165,21 @@ app.controller('SeguroController', ['$scope', '$log', 'remoteResource', function
         alert('Ha fallado la peticion. Estado HTTP: ' + status);
     });
 
+}]);
+
+app.controller('ListadoSeguroController', ['$scope', 'remoteResource', function($scope, remoteResource)
+{
+    $scope.seguros = [];
+
+    $scope.filtro = {
+        apel: ''
+    }
+
+    remoteResource.list(function(seguros)
+    {
+        $scope.seguros = seguros;
+    }, function(data, status)
+    {
+        alert('Ha fallado la petición. Estado HTTP: ' + status);
+    });
 }]);

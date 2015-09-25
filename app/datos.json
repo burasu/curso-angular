@@ -1,7 +1,7 @@
 {
     "nif": "12345678Z",
     "nombre": "Carlos",
-    "ape1": "Cano",
+    "apel": "Cano",
     "edad": 41,
     "sexo": "H",
     "casado": true,
