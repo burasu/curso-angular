@@ -4,7 +4,7 @@
   "description": "Curso de AngularJS",
   "dependencies": {
     "angular": "~1.4.6",
-    "angular-sanitize": "~1.4.6",
+    "angular-route": "~1.4.6",
     "bootstrap": "~3.3.5"
   },
   "overrides": {

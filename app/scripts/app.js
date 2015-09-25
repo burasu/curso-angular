@@ -1,17 +1,17 @@
 'use strict';
 
-var app = angular.module('app', ['ngSanitize']);
+var app = angular.module('app', ['ngRoute']);
 
 function RemoteResource($http, $q, baseUrl)
 {
-    this.get = function()
+    this.get = function(idSeguro)
     {
         var defered = $q.defer();
         var promise = defered.promise;
 
         $http({
             method: 'GET',
-            url: baseUrl + '/datos.json'
+            url: baseUrl + '/datos' + idSeguro + '.json'
         })
         .success(function(data, status, headers, config)
         {
@@ -119,16 +119,49 @@ app.filter('filteri18n', ['$filter', function($filter)
 
 }]);
 
-app.controller('MainController', ['$scope', function($scope)
+app.config(['$routeProvider', function($routeProvider)
 {
+    $routeProvider
+        .when('/',
+        {
+            templateUrl: 'main.html',
+            controller: 'MainController'
+        })
+        .when('/seguro/listado',
+        {
+            templateUrl: 'listado.html',
+            controller: 'ListadoSeguroController',
+            resolve: {
+                seguros: ['remoteResource', function(remoteResource)
+                {
+                    return remoteResource.list();
+                }]
+            }
+        })
+        .when('/seguro/edit/:idSeguro',
+        {
+            templateUrl: 'detalle.html',
+            controller: 'DetalleSeguroController',
+            resolve: {
+                seguro: ['remoteResource', '$route', function(remoteResource, $route)
+                {
+                    return remoteResource.get($route.current.params.idSeguro);
+                }]
+            }
+        })
+        .otherwise(
+        {
+            redirectTo: '/'
+        });
 
 }]);
 
-app.controller('SeguroController', ['$scope', '$log', 'remoteResource', function($scope, $log, remoteResource)
-{
-    $scope.mensaje = 'Hola <strong>Mundo</strong>';
 
-    $scope.urlLogo="http://www.cursoangularjs.es/lib/exe/fetch.php?cache=&media=unidades:04_masdirectivas:medical14.png";
+app.controller('DetalleSeguroController', ['$scope', 'seguro', function($scope, seguro)
+{
+    $scope.filtro = {
+        apel: ''
+    };
 
     $scope.sexos = [
         {
@@ -141,7 +174,7 @@ app.controller('SeguroController', ['$scope', '$log', 'remoteResource', function
         }
     ];
 
-    $scope.seguro={
+    $scope.seguro = {
         nif: '',
         nombre: '',
         apel: '',
@@ -165,31 +198,18 @@ app.controller('SeguroController', ['$scope', '$log', 'remoteResource', function
         fechaCreacion:new Date()
     };
 
-    $log.debug('Acabamos de crear el $scope');
-
-    remoteResource.get().then(function(seguro)
-    {
-        $scope.seguro = seguro;
-    }, function(status)
-    {
-        alert('Ha fallado la peticion. Estado HTTP: ' + status);
-    });
+    $scope.seguro = seguro;
 
 }]);
 
-app.controller('ListadoSeguroController', ['$scope', 'remoteResource', function($scope, remoteResource)
+
+app.controller('ListadoSeguroController', ['$scope', 'seguros', function($scope, seguros)
 {
-    $scope.seguros = [];
+    $scope.seguros = seguros;
+}]);
 
-    $scope.filtro = {
-        apel: ''
-    }
 
-    remoteResource.list().then(function(seguros)
-    {
-        $scope.seguros = seguros;
-    }, function(status)
-    {
-        alert('Ha fallado la petición. Estado HTTP: ' + status);
-    });
+app.controller('MainController', ['$scope', function($scope)
+{
+
 }]);

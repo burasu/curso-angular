@@ -1,0 +1,23 @@
+{
+  "idSeguro": 6,
+  "nif": "27469252F",
+  "nombre": "Alfredo",
+  "apel": "Padilla",
+  "edad": 45,
+  "sexo": "H",
+  "casado": true,
+  "numHijos": 2,
+  "embarazada": false,
+  "coberturas": {
+    "oftalmologia": true,
+    "dental": true,
+    "fecundacionInVitro": false
+  },
+  "enfermedades": {
+    "corazon": true,
+    "estomacal": false,
+    "rinyones": false,
+    "alergia": false,
+    "nombreAlergia": ""
+  }
+}
