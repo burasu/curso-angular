@@ -119,6 +119,26 @@ app.filter('filteri18n', ['$filter', function($filter)
 
 }]);
 
+
+app.directive('caDatepicker', [function(dateFormat)
+{
+    return {
+        restrict: 'A',
+        link: function($scope, element, attributes)
+        {
+            element.datepicker(
+                {
+                    dateFormat: attributes.caDatepicker,
+                    onSelect: function ()
+                    {
+                        $(this).trigger('change');
+                    }
+                });
+        }
+    }
+}]);
+
+
 app.config(['$routeProvider', function($routeProvider)
 {
     $routeProvider
@@ -199,6 +219,18 @@ app.controller('DetalleSeguroController', ['$scope', 'seguro', function($scope, 
     };
 
     $scope.seguro = seguro;
+
+    $scope.guardar = function()
+    {
+        if ($scope.form.$valid)
+        {
+            alert('Los datos aqui se habrían enviado al servidor y estarían validados en la parte clientes.');
+        }
+        else
+        {
+            alert('Hay datos inválidos.');
+        }
+    };
 
 }]);
 

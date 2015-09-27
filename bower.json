@@ -5,7 +5,8 @@
   "dependencies": {
     "angular": "~1.4.6",
     "angular-route": "~1.4.6",
-    "bootstrap": "~3.3.5"
+    "bootstrap": "~3.3.5",
+    "jquery-ui": "~1.11.4"
   },
   "overrides": {
     "bootstrap": {
@@ -14,6 +15,12 @@
         "dist/css/bootstrap.css",
         "less/bootstrap.less"
       ]
+    },
+    "jquery-ui": {
+        "main": [
+            "themes/base/jquery-ui.css",
+            "jquery-ui.js"
+        ]
     }
   }
 }
